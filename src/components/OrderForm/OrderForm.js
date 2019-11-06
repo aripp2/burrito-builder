@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { addOrder } from '../../apiCalls';
+import { setOrders } from '../../actions';
 
-class OrderForm extends Component {
+export class OrderForm extends Component {
   constructor(props) {
     super();
     this.props = props;
@@ -19,9 +22,22 @@ class OrderForm extends Component {
     this.setState({ingredients: [...this.state.ingredients, e.target.name]});
   }
 
-  handleSubmit = e => {
-    e.preventDefault();
-    this.clearInputs();
+  // handleSubmit = e => {
+  //   e.preventDefault();
+  //   this.submitOrder()
+  //   this.clearInputs();
+  // }
+
+  submitOrder = async() => {
+    const { name, ingredients } = this.state;
+    const { setOrders } = this.props;
+    try {
+      const orders = await addOrder(name, ingredients)
+      setOrders(orders)
+    } catch ({ message }) {
+      console.log(message)
+    }
+    this.clearInputs()
   }
 
   clearInputs = () => {
@@ -55,7 +71,7 @@ class OrderForm extends Component {
 
         <button
           disabled={!ingredients.length} 
-          onClick={e => this.handleSubmit(e)}>
+          onClick={this.submitOrder}>
           Submit Order
         </button>
       </form>
@@ -63,4 +79,8 @@ class OrderForm extends Component {
   }
 }
 
-export default OrderForm;
+export const mapDispatchToProps = dispatch => ({
+  setOrders: orders => dispatch(setOrders(orders))
+})
+
+export default connect(null, mapDispatchToProps)(OrderForm);
