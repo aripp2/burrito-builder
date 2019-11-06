@@ -29,6 +29,7 @@ class OrderForm extends Component {
   }
 
   render() {
+    const { ingredients } = this.state;
     const possibleIngredients = ['beans', 'steak', 'carnitas', 'sofritas', 'lettuce', 'queso fresco', 'pico de gallo', 'hot sauce', 'guacamole', 'jalapenos', 'cilantro', 'sour cream'];
     const ingredientButtons = possibleIngredients.map(ingredient => {
       return (
@@ -52,7 +53,9 @@ class OrderForm extends Component {
 
         <p>Order: { this.state.ingredients.join(', ') || 'Nothing selected' }</p>
 
-        <button onClick={e => this.handleSubmit(e)}>
+        <button
+          disabled={!ingredients.length} 
+          onClick={e => this.handleSubmit(e)}>
           Submit Order
         </button>
       </form>
