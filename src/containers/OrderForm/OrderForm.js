@@ -4,9 +4,8 @@ import { addOrder } from '../../apiCalls';
 import { setOrders } from '../../actions';
 
 export class OrderForm extends Component {
-  constructor(props) {
+  constructor() {
     super();
-    this.props = props;
     this.state = {
       name: '',
       ingredients: []
@@ -21,12 +20,6 @@ export class OrderForm extends Component {
     e.preventDefault();
     this.setState({ingredients: [...this.state.ingredients, e.target.name]});
   }
-
-  // handleSubmit = e => {
-  //   e.preventDefault();
-  //   this.submitOrder()
-  //   this.clearInputs();
-  // }
 
   submitOrder = async() => {
     const { name, ingredients } = this.state;
@@ -49,7 +42,10 @@ export class OrderForm extends Component {
     const possibleIngredients = ['beans', 'steak', 'carnitas', 'sofritas', 'lettuce', 'queso fresco', 'pico de gallo', 'hot sauce', 'guacamole', 'jalapenos', 'cilantro', 'sour cream'];
     const ingredientButtons = possibleIngredients.map(ingredient => {
       return (
-        <button key={ingredient} name={ingredient} onClick={e => this.handleIngredientChange(e)}>
+        <button 
+          key={ingredient} 
+          name={ingredient} 
+          onClick={e => this.handleIngredientChange(e)}>
           {ingredient}
         </button>
       )

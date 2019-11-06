@@ -6,12 +6,6 @@ import { getOrders } from '../../apiCalls';
 import './Orders.css';
 
 export class Orders extends Component {
-  // constructor() {
-  //   super();
-  //   this.state = {
-
-  //   }
-  // } 
 
   async componentDidMount() {
     const { setOrders } = this.props;
